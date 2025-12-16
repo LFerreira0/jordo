@@ -1,0 +1,76 @@
+.sidebar {
+  width: 56px;
+  height: 100vh;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 0.75rem 0;
+}
+
+/* ================================
+   LOGO
+================================ */
+
+.logo {
+  font-size: 0.8rem;
+  font-weight: 800; // bold de verdade
+  letter-spacing: 0.06em;
+
+  color: var(--primary); // tudo verde 🌱
+  margin-bottom: 1.5rem;
+
+  user-select: none;
+}
+
+
+/* ================================
+   MENU
+================================ */
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ================================
+   MENU ITEM
+================================ */
+
+.menu-item {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--text-muted);
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &:hover {
+    background-color: rgba(67, 206, 72, 0.12);
+    color: var(--primary);
+  }
+
+  &.active {
+    background-color: rgba(67, 206, 72, 0.18);
+    color: var(--primary);
+  }
+}

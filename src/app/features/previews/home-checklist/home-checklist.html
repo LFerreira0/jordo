@@ -1,0 +1,46 @@
+<div class="checklist-card">
+  <header class="card-header">
+    <h3>Checklist</h3>
+  </header>
+
+  <!-- Add item -->
+  <div class="input-row">
+    <input
+      type="text"
+      placeholder="Novo item..."
+      [(ngModel)]="newItem"
+      (keydown.enter)="addItem()"
+    />
+
+    <button class="add-btn" (click)="addItem()">+</button>
+  </div>
+
+  <!-- List -->
+  <ul class="checklist">
+    <li *ngFor="let item of items; let i = index">
+      <label class="item">
+        <input
+          type="checkbox"
+          [checked]="item.doneToday"
+          (change)="toggle(item)"
+        />
+
+        <span class="checkbox"></span>
+
+        <span class="text" [class.done]="item.doneToday">
+          {{ item.text }}
+        </span>
+      </label>
+
+      <div class="right">
+        <span class="streak" *ngIf="item.streak > 0">
+          🔥 {{ item.streak }}
+        </span>
+
+        <button class="remove-btn" (click)="removeItem(i)">
+          ✕
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>

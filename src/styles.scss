@@ -1,1 +1,123 @@
-/* You can add global styles to this file, and also import other style files */
+/* =====================================================
+   1. RESET GLOBAL
+===================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* =====================================================
+   2. DESIGN TOKENS (CORES + FONTES)
+===================================================== */
+
+:root {
+  /* Colors — Light */
+  --bg: #ffffff;
+  --surface: #f5f7fa;
+  --border: #e5e7eb;
+
+  --text: #111827;
+  --text-muted: #6b7280;
+
+  --primary: #43ce48;
+  --primary-hover: #36b03b;
+
+  --danger: #ef4444;
+  --warning: #f59e0b;
+
+  /* Typography */
+  --font-body: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Arial, sans-serif;
+
+  --font-title: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Arial, sans-serif;
+}
+
+/* =====================================================
+   3. DARK THEME
+===================================================== */
+
+[data-theme='dark'] {
+  --bg: #0f172a;
+  --surface: #020617;
+  --border: #1e293b;
+
+  --text: #e5e7eb;
+  --text-muted: #94a3b8;
+
+  --primary: #43ce48;
+  --primary-hover: #5fe56a;
+
+  --danger: #f87171;
+  --warning: #fbbf24;
+}
+
+/* =====================================================
+   4. BASE ELEMENTS
+===================================================== */
+
+body {
+  font-family: var(--font-body);
+  line-height: 1.5;
+  background-color: var(--bg);
+  color: var(--text);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* =====================================================
+   5. UTILITÁRIOS GLOBAIS
+===================================================== */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.surface {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
