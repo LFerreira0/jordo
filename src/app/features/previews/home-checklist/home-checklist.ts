@@ -140,13 +140,23 @@ export class HomeChecklistComponent implements OnInit {
      DATE HELPERS
   ================================ */
 
-  today() {
-    return new Date().toISOString().split('T')[0];
-  }
+today(): string {
+  const now = new Date();
+  return [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, '0'),
+    String(now.getDate()).padStart(2, '0'),
+  ].join('-');
+}
 
-  yesterday() {
-    const d = new Date();
-    d.setDate(d.getDate() - 1);
-    return d.toISOString().split('T')[0];
-  }
+yesterday(): string {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+
+  return [
+    d.getFullYear(),
+    String(d.getMonth() + 1).padStart(2, '0'),
+    String(d.getDate()).padStart(2, '0'),
+  ].join('-');
+}
 }
