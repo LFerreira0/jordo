@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 interface ChecklistItem {
   text: string;
   doneToday: boolean;
-  lastCheckedDate: string | null; // YYYY-MM-DD
+  lastCheckedDate: string | null;
   streak: number;
 }
 
@@ -22,16 +22,35 @@ const LAST_OPEN_KEY = 'jordo-last-open-date';
 export class HomeChecklistComponent implements OnInit {
   newItem = '';
   items: ChecklistItem[] = [];
-  private midnightTimer: any;
+
+  maxVisibleItems = 5;
+  expanded = false;
 
   ngOnInit() {
     this.load();
     this.checkDayChange();
-    this.scheduleMidnightCheck();
   }
 
-  ngOnDestroy() {
-    clearTimeout(this.midnightTimer);
+  /* ================================
+     DERIVED STATE
+  ================================ */
+
+  get visibleItems() {
+    return this.expanded
+      ? this.items
+      : this.items.slice(0, this.maxVisibleItems);
+  }
+
+  get doneCount() {
+    return this.items.filter(i => i.doneToday).length;
+  }
+
+  get totalCount() {
+    return this.items.length;
+  }
+
+  get allDoneToday() {
+    return this.totalCount > 0 && this.doneCount === this.totalCount;
   }
 
   /* ================================
@@ -68,20 +87,29 @@ export class HomeChecklistComponent implements OnInit {
     const today = this.today();
     const yesterday = this.yesterday();
 
-    if (item.lastCheckedDate === yesterday) {
-      item.streak += 1;
-    } else {
-      item.streak = 1;
-    }
+    item.streak =
+      item.lastCheckedDate === yesterday ? item.streak + 1 : 1;
 
     item.doneToday = true;
     item.lastCheckedDate = today;
+
+    if (this.allDoneToday) {
+      this.expanded = false; // auto-collapse
+    }
 
     this.save();
   }
 
   /* ================================
-     DAY CHANGE HANDLING
+     EXPAND
+  ================================ */
+
+  toggleExpand() {
+    this.expanded = !this.expanded;
+  }
+
+  /* ================================
+     DAY CHANGE
   ================================ */
 
   checkDayChange() {
@@ -89,26 +117,10 @@ export class HomeChecklistComponent implements OnInit {
     const lastOpen = localStorage.getItem(LAST_OPEN_KEY);
 
     if (lastOpen !== today) {
-      this.items.forEach(item => {
-        item.doneToday = false;
-      });
-
+      this.items.forEach(i => (i.doneToday = false));
       localStorage.setItem(LAST_OPEN_KEY, today);
       this.save();
     }
-  }
-
-  scheduleMidnightCheck() {
-    const now = new Date();
-    const nextMidnight = new Date();
-    nextMidnight.setHours(24, 0, 0, 0);
-
-    const msUntilMidnight = nextMidnight.getTime() - now.getTime();
-
-    this.midnightTimer = setTimeout(() => {
-      this.checkDayChange();
-      this.scheduleMidnightCheck();
-    }, msUntilMidnight);
   }
 
   /* ================================
@@ -121,20 +133,18 @@ export class HomeChecklistComponent implements OnInit {
 
   load() {
     const data = localStorage.getItem(STORAGE_KEY);
-    if (data) {
-      this.items = JSON.parse(data);
-    }
+    if (data) this.items = JSON.parse(data);
   }
 
   /* ================================
      DATE HELPERS
   ================================ */
 
-  today(): string {
+  today() {
     return new Date().toISOString().split('T')[0];
   }
 
-  yesterday(): string {
+  yesterday() {
     const d = new Date();
     d.setDate(d.getDate() - 1);
     return d.toISOString().split('T')[0];

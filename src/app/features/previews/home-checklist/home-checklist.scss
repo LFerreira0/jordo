@@ -1,154 +1,108 @@
 :host {
   display: block;
-  width: 100%;
   max-width: 320px;
 }
 
-/* ================================
-   CARD
-================================ */
-
 .checklist-card {
-  height: 260px;
   padding: 0.75rem;
-
-  display: flex;
-  flex-direction: column;
-
-  background-color: var(--surface);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-/* ================================
-   HEADER
-================================ */
+/* ================= HEADER ================= */
 
 .card-header {
-  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   h3 {
     font-size: 0.9rem;
     font-weight: 600;
   }
+
+  .counter {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
 }
 
-/* ================================
-   INPUT
-================================ */
+/* ================= INPUT ================= */
 
 .input-row {
   display: flex;
   gap: 0.4rem;
-  margin-bottom: 0.5rem;
 
   input {
     flex: 1;
     padding: 0.4rem 0.6rem;
     font-size: 0.75rem;
-
-    background-color: var(--bg);
-    border: 1px solid var(--border);
     border-radius: 8px;
-    color: var(--text);
+    border: 1px solid var(--border);
+    background: var(--bg);
   }
 
   .add-btn {
     width: 30px;
     height: 30px;
     border-radius: 8px;
-
-    background-color: var(--primary);
-    color: #000;
+    background: var(--primary);
     font-weight: 700;
-
-    &:hover {
-      background-color: var(--primary-hover);
-    }
   }
 }
 
-/* ================================
-   LIST
-================================ */
+/* ================= LIST ================= */
 
 .checklist {
-  flex: 1;
-  overflow-y: auto;
-
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-
-  li {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    padding: 0.35rem 0.5rem;
-    border-radius: 8px;
-
-    background-color: var(--bg);
-    border: 1px solid var(--border);
-  }
+  transition: max-height 0.25s ease;
 }
 
-/* ================================
-   ITEM
-================================ */
+li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.5rem;
+  background: var(--bg);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+/* ================= ITEM ================= */
 
 .item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  cursor: pointer;
   flex: 1;
+  cursor: pointer;
 }
 
 .item input {
   position: absolute;
   opacity: 0;
-  pointer-events: none;
 }
 
-/* custom checkbox */
 .checkbox {
   width: 16px;
   height: 16px;
   border-radius: 4px;
-
-  background-color: var(--bg);
   border: 1.5px solid var(--border);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  transition: all 0.15s ease;
-}
-
-.checkbox::after {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-  background-color: var(--bg);
-  transform: scale(0);
-  transition: transform 0.12s ease;
 }
 
 .item input:checked + .checkbox {
-  background-color: var(--primary);
+  background: var(--primary);
   border-color: var(--primary);
-}
-
-.item input:checked + .checkbox::after {
-  transform: scale(1);
 }
 
 .text {
   font-size: 0.75rem;
-  color: var(--text);
 }
 
 .text.done {
@@ -156,9 +110,7 @@
   color: var(--text-muted);
 }
 
-/* ================================
-   RIGHT SIDE
-================================ */
+/* ================= RIGHT ================= */
 
 .right {
   display: flex;
@@ -168,15 +120,26 @@
 
 .streak {
   font-size: 0.7rem;
-  font-weight: 600;
   color: var(--primary);
 }
 
 .remove-btn {
   font-size: 0.75rem;
   color: var(--text-muted);
+}
 
-  &:hover {
-    color: var(--danger);
-  }
+/* ================= ACTIONS ================= */
+
+.expand-btn,
+.go-full-btn {
+  background: none;
+  border: none;
+  font-size: 0.7rem;
+  color: var(--primary);
+  cursor: pointer;
+  align-self: center;
+}
+
+.go-full-btn {
+  margin-top: 0.25rem;
 }

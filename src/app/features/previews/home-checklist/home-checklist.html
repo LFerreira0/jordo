@@ -1,9 +1,12 @@
 <div class="checklist-card">
   <header class="card-header">
-    <h3>Checklist</h3>
+    <h3>Tarefas do dia</h3>
+
+    <span class="counter">
+      {{ doneCount }} / {{ totalCount }} feitos hoje
+    </span>
   </header>
 
-  <!-- Add item -->
   <div class="input-row">
     <input
       type="text"
@@ -11,13 +14,14 @@
       [(ngModel)]="newItem"
       (keydown.enter)="addItem()"
     />
-
     <button class="add-btn" (click)="addItem()">+</button>
   </div>
 
-  <!-- List -->
-  <ul class="checklist">
-    <li *ngFor="let item of items; let i = index">
+  <ul
+    class="checklist"
+    [class.collapsed]="!expanded && items.length > maxVisibleItems"
+  >
+    <li *ngFor="let item of visibleItems; let i = index">
       <label class="item">
         <input
           type="checkbox"
@@ -37,10 +41,20 @@
           🔥 {{ item.streak }}
         </span>
 
-        <button class="remove-btn" (click)="removeItem(i)">
-          ✕
-        </button>
+        <button class="remove-btn" (click)="removeItem(i)">✕</button>
       </div>
     </li>
   </ul>
+
+  <button
+    *ngIf="items.length > maxVisibleItems"
+    class="expand-btn"
+    (click)="toggleExpand()"
+  >
+    {{ expanded ? 'Ver menos' : 'Ver mais' }}
+  </button>
+
+  <button class="go-full-btn">
+    Ver checklist completo →
+  </button>
 </div>
